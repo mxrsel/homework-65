@@ -1,0 +1,30 @@
+.main-container {
+    background: #000;
+    margin-top: 15px;
+    border-radius: 15px;
+    padding: 16px;
+    box-shadow: 5px 10px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.navBrand {
+    text-decoration: none;
+    color: #fff;
+}
+
+.navList {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.navLink {
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.navLink:hover {
+font-size: 18px;
+}
