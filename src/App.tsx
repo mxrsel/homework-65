@@ -1,8 +1,6 @@
 import Toolbar from "./containers/Toolbar/Toolbar";
 import {Route, Routes} from "react-router-dom";
 import Home from "./containers/Home/Home.tsx";
-import About from "./containers/About/About.tsx";
-import Projects from "./containers/Projects/Projects.tsx";
 
 const App = () => {
 
@@ -14,8 +12,8 @@ const App = () => {
 
         <Routes>
             <Route path='/pages/home' element={<Home />} />
-            <Route path='/pages/about' element={<About />}/>
-            <Route path='/pages/projects' element={<Projects />} />
+            <Route path='/pages/:pagesId' element={<Home />}/>
+            <Route path='*' element={<p>Page Not found!</p>} />
         </Routes>
     </>
     )

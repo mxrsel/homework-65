@@ -1,13 +1,23 @@
 import React, {useEffect, useState} from "react";
-import {pagesInfo} from "../../types.ts";
+import {Page} from "../../types.ts";
 import './Home.css';
 import Spinner from "../../components/Spinner/Spinner.tsx";
-import fetchPagesData from "../../components/FetchingPages/FetchingPages.tsx";
+import axiosApi from "../../axiosApi.ts";
+import {useParams} from "react-router-dom";
 
 const Home: React.FC = () => {
-const [homeData, setHomeData] = useState<pagesInfo | null>(null);
+    const {pagesId} = useParams();
+const [homeData, setHomeData] = useState<Page[]>([]);
     const [loading, setLoading] = useState<boolean>(false)
 
+    const fetchPagesData = async (page: string) => {
+        try {
+            const response = await axiosApi.get(`/pages/${page}.json`);
+            return response.data
+        }catch (e) {
+            console.error('Error fetching pages', e);
+        }
+    }
 
 
     useEffect(() => {
@@ -31,7 +41,7 @@ const [homeData, setHomeData] = useState<pagesInfo | null>(null);
                 {homeData ? (
                         <>
                             <h1>{homeData.title}</h1>
-                            <p>{homeData?.content}</p>
+                            <p>{homeData.content}</p>
                         </>
                     ) : (
                         <p>Not found</p>
