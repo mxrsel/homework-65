@@ -1,5 +1,5 @@
 import './Toolbar.css';
-import {NavLink} from "react-router-dom";
+import  {NavLink} from "react-router-dom";
 import {PAGES} from "../../pages.ts";
 
 const Toolbar = () => {

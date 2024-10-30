@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {pagesInfo} from "../../types.ts";
 import './Home.css';
 import axiosApi from "../../axiosApi.ts";
-import { useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner.tsx";
 
 const Home: React.FC = () => {
@@ -45,6 +45,8 @@ const Home: React.FC = () => {
                         <>
                             <h1>{pages.title}</h1>
                             <p>{pages.content}</p>
+                            <Link className='bodyEditBtn mt-1' to={`/pages/edit-pages/${pagesId}`}>Edit</Link>
+
                         </>
                     ) : (
                         <p>Not found</p>
