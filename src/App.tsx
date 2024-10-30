@@ -11,7 +11,7 @@ const App = () => {
         </header>
 
         <Routes>
-            <Route path='/pages/home' element={<Home />} />
+            <Route path='/pages' element={<Home />} />
             <Route path='/pages/:pagesId' element={<Home />}/>
             <Route path='*' element={<p>Page Not found!</p>} />
         </Routes>

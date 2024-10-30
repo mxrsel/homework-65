@@ -1,55 +1,58 @@
-import React, {useEffect, useState} from "react";
-import {Page} from "../../types.ts";
+import React, {useCallback, useEffect, useState} from "react";
+import {pagesInfo} from "../../types.ts";
 import './Home.css';
-import Spinner from "../../components/Spinner/Spinner.tsx";
 import axiosApi from "../../axiosApi.ts";
-import {useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
+import Spinner from "../../components/Spinner/Spinner.tsx";
 
 const Home: React.FC = () => {
     const {pagesId} = useParams();
-const [homeData, setHomeData] = useState<Page[]>([]);
+    const [pages, setPages] = useState<pagesInfo | null>(null);
     const [loading, setLoading] = useState<boolean>(false)
 
-    const fetchPagesData = async (page: string) => {
-        try {
-            const response = await axiosApi.get(`/pages/${page}.json`);
-            return response.data
-        }catch (e) {
-            console.error('Error fetching pages', e);
-        }
+    const fetchData = async (page: string) => {
+        const response = await axiosApi.get(`/pages/${page}.json`);
+        return response.data;
     }
+
+    const fetchPages = useCallback(async () => {
+       setLoading(true)
+        try {
+            if (pagesId !== undefined) {
+                const data = await fetchData(pagesId)
+                setPages(data)
+            }
+        }catch (e) {
+           console.error('Error fetching pages', e)
+        } finally {
+            setLoading(false)
+        }
+    }, [pagesId])
+
 
 
     useEffect(() => {
-        const getHomeData = async () => {
-            setLoading(true)
-            const data = await fetchPagesData('home');
-            setHomeData(data);
-            setLoading(false)
-        }
-
-        void getHomeData();
-    }, []);
+        void fetchPages()
+    }, [fetchPages])
 
     return (
-
-        <div className='mainBody'>
-            {loading ?
-                <Spinner />
-                :
-                <>
-                {homeData ? (
+        <>
+        {loading ? <Spinner />
+         :
+            <>
+                <div className='mainBody'>
+                    {pages ? (
                         <>
-                            <h1>{homeData.title}</h1>
-                            <p>{homeData.content}</p>
+                            <h1>{pages.title}</h1>
+                            <p>{pages.content}</p>
                         </>
                     ) : (
                         <p>Not found</p>
                     )}
-                </>
-            }
-
-        </div>
+                </div>
+            </>
+        }
+        </>
     );
 };
 

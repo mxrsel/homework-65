@@ -1,5 +1,6 @@
 import './Toolbar.css';
 import {NavLink} from "react-router-dom";
+import {PAGES} from "../../pages.ts";
 
 const Toolbar = () => {
     return (
@@ -8,16 +9,11 @@ const Toolbar = () => {
             <div className='container-fluid'>
                 <NavLink className='navBrand' to='/pages/home'>Navbar</NavLink>
                 <ul className='navList'>
-
-                        <NavLink to='/pages/home' className='navLink'>Home</NavLink>
-
-                        <NavLink to='/pages/about' className='navLink'>About</NavLink>
-
-                        <NavLink to='/pages/projects' className='navLink'>Projects</NavLink>
-
-                        <NavLink to='/pages/contacts' className='navLink'>Contacts</NavLink>
-
-                         <NavLink to='/pages/events' className='navLink'>Events</NavLink>
+                    {PAGES.map((page) => (
+                        <div key={page.id}>
+                        <NavLink className='navLink' to={`/pages/${page.id}`}>{page.title}</NavLink>
+                        </div>
+                    ))}
                     </ul>
                 </div>
             </div>

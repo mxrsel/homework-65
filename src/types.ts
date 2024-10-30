@@ -8,7 +8,5 @@ export interface pagesInfo{
     content: string;
 }
 
-export interface Page extends pagesInfo {
-    id: string
-}
+
 
