@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {pagesInfo} from "../../types.ts";
 import axiosApi from "../../axiosApi.ts";
 import './Home.css';
-
+import Spinner from "../../components/Spinner/Spinner.tsx";
 
 
 const Home: React.FC = () => {
@@ -31,15 +31,23 @@ const [loading, setLoading] = useState<boolean>(false);
     }, []);
 
     return (
+
         <div className='mainBody'>
-            {homeData ? (
+            {loading ?
+                <Spinner />
+                :
                 <>
-             <h1>{homeData.title}</h1>
-             <p>{homeData?.content}</p>
+                {homeData ? (
+                        <>
+                            <h1>{homeData.title}</h1>
+                            <p>{homeData?.content}</p>
+                        </>
+                    ) : (
+                        <p>Not found</p>
+                    )}
                 </>
-            ) : (
-                <p>Not found</p>
-            )}
+            }
+
         </div>
     );
 };
