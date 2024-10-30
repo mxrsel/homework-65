@@ -1,30 +1,19 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {pagesInfo} from "../../types.ts";
-import axiosApi from "../../axiosApi.ts";
 import Spinner from "../../components/Spinner/Spinner.tsx";
 import './About.css';
+import fetchPagesData from "../../components/FetchingPages/FetchingPages.tsx";
 
-const About = () => {
+const About: React.FC = () => {
     const [aboutData, setAboutData] = useState<pagesInfo | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const fetchAboutPageData = async () => {
-        try {
-            setLoading(true)
-            const response = await axiosApi.get('pages/about.json');
-            setAboutData(response.data);
-            return response.data;
-        } catch (e) {
-            console.error('Error fetching pages', e);
-        } finally {
-            setLoading(false)
-        }
-    }
+    const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
         const getAboutPageData = async () => {
-            const dataAboutPage = await fetchAboutPageData();
+            setLoading(true)
+            const dataAboutPage = await fetchPagesData('about');
             setAboutData(dataAboutPage);
+            setLoading(false)
         }
         void getAboutPageData()
     }, []);
